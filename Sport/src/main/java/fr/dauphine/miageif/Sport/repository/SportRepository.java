@@ -1,13 +1,9 @@
-package repository;
+package fr.dauphine.miageif.Sport.repository;
 
-import domain.Sport;
+import fr.dauphine.miageif.Sport.entity.Sport;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import java.util.List;
 
 public interface SportRepository extends MongoRepository<Sport, String> {
 
-    List<Sport> findByName(String name);
-    List<Sport> findAll();
-
+    Sport findByName(String name);
 }

@@ -1,4 +1,4 @@
-package domain;
+package fr.dauphine.miageif.Sport.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,20 +9,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document(collection = "Sport")
+@Document(collection = "Sport2")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Sport {
     @Id
     private String _id;
-
-    private String id;
     private String name;
     private Object site;
-
     private double latitudeMin;
-    public  String get_id(){
+
+   /* public  String get_id(){
         return _id;
 
     }
@@ -69,5 +67,5 @@ public class Sport {
 
     public void setLatitudeMin(double latitudeMin){
         this.latitudeMin = latitudeMin;
-    }
+    }*/
 }
