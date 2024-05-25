@@ -1,6 +1,7 @@
 package fr.dauphine.miageif.Sport.service.impl;
 
 import fr.dauphine.miageif.Sport.entity.Sport;
+import fr.dauphine.miageif.Sport.service.SportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import fr.dauphine.miageif.Sport.repository.SportRepository;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-public class SportServiceImpl implements SportService{
+public class SportServiceImpl implements SportService {
 
     @Autowired
     private SportRepository sportRepository;
