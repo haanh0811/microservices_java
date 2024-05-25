@@ -14,18 +14,22 @@ public class SportController {
     @Autowired
     private SportService sportService;
 
-    @GetMapping
+    public SportController(SportService sportService) {
+        this.sportService = sportService;
+    }
+
+    @GetMapping("/all")
     public List<Sport> getAllSports() {
         return sportService.getAllSports();
     }
 
-    @GetMapping("/{name}")
+    /*@GetMapping("/{name}")
     public Sport getSportByName(@PathVariable String name) {
         return sportService.getSportByName(name);
-    }
+    }*/
 
-    @PostMapping
+    @PostMapping("/insert")
     public Sport createSport(@RequestBody Sport sport) {
-        return sportService.saveSport(sport);
+        return sportService.addSport(sport);
     }
 }

@@ -21,7 +21,7 @@ public class SportService {
         return sportRepository.findByName(name).stream().findFirst().orElse(null);
     }
 
-    public Sport saveSport(Sport sport) {
+    public Sport addSport(Sport sport) {
         return sportRepository.save(sport);
     }
 }

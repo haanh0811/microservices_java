@@ -6,6 +6,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface SportRepository extends MongoRepository<Sport, String> {
+
     List<Sport> findByName(String name);
+    List<Sport> findAll();
 
 }
