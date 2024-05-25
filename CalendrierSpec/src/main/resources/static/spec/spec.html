@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Spectateurs</title>
+</head>
+<body>
+<div class="spectator-list">
+
+</div>
+
+<script>
+    fetch('http://localhost:8080/api/spec/all')
+        .then(response => response.json())
+        .then(data => {
+            const spectatorList = document.querySelector('.spectator-list');
+            data.forEach(spectator => {
+                const spectatorDiv = document.createElement('div');
+                spectatorDiv.classList.add('spectator');
+                spectatorDiv.innerHTML = `
+                        <p><strong>ID:</strong> ${spectator.id}</p>
+                        <p><strong>Nom:</strong> ${spectator.name}</p>
+                        <p><strong>Calendrier:</strong></p>
+                        <ul>
+                            ${spectator.calendrierSpecList.map(event => `<li>${event.eventId} - ${event.sportName} - ${event.site} - ${event.eventDateTime}</li>`).join('')}
+                        </ul>
+                        <hr>
+                    `;
+                spectatorList.appendChild(spectatorDiv);
+            });
+        })
+        .catch(error => console.error('Erreur lors du chargement des données :', error));
+</script>
+</body>
+</html>
+
