@@ -3,6 +3,7 @@ package fr.dauphine.miageif.CalendrierSpec.service.impl;
 import fr.dauphine.miageif.CalendrierSpec.entity.CalendrierSpec;
 import fr.dauphine.miageif.CalendrierSpec.entity.Spec;
 import fr.dauphine.miageif.CalendrierSpec.repository.SpecRepository;
+import fr.dauphine.miageif.CalendrierSpec.service.SpecService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +11,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-public class SpecServiceImpl {
+public class SpecServiceImpl implements SpecService {
     @Autowired
     private SpecRepository specRepository;
 
-    public List<Spec> getAllSpects(){
+    public List<Spec> getAllSpecs(){
         return specRepository.findAll();
     }
     public Spec getSpecById(String id) {
@@ -22,25 +23,26 @@ public class SpecServiceImpl {
                 .orElseThrow(() -> new NoSuchElementException("Spectator not found with id " + id));
     }
 
-    public Spec addSpectator(Spec spectator) {
-        return specRepository.save(spectator);
+    public Spec addSpec(Spec spec) {
+
+        return specRepository.save(spec);
     }
-    public Spec updateSpectator(String id, Spec updatedSpectator) {
+    public Spec updateSpec(String id, Spec updatedSpectator) {
         Spec spectator = getSpecById(id);
         spectator.setName(updatedSpectator.getName());
         spectator.setCalendrierSpecList(updatedSpectator.getCalendrierSpecList());
         return specRepository.save(spectator);
     }
-    public void deleteSpectator(String id) {
+    public void deleteSpec(String id) {
         getSpecById(id);
         specRepository.deleteById(id);
     }
-    public Spec addEventToSpectator(String spectatorId, CalendrierSpec event) {
+    public Spec addEventToSpec(String spectatorId, CalendrierSpec event) {
         Spec spectator = getSpecById(spectatorId);
         spectator.getCalendrierSpecList().add(event);
         return specRepository.save(spectator);
     }
-    public Spec updateEventInSpectator(String spectatorId, String eventId, CalendrierSpec updatedEvent) {
+    public Spec updateEventInSpec(String spectatorId, String eventId, CalendrierSpec updatedEvent) {
         Spec spectator = getSpecById(spectatorId);
         List<CalendrierSpec> events = spectator.getCalendrierSpecList();
         for (int i = 0; i < events.size(); i++) {
@@ -52,7 +54,7 @@ public class SpecServiceImpl {
         return specRepository.save(spectator);
     }
 
-    public Spec deleteEventFromSpectator(String spectatorId, String eventId) {
+    public Spec deleteEventFromSpec(String spectatorId, String eventId) {
         Spec spectator = getSpecById(spectatorId);
         spectator.getCalendrierSpecList().removeIf(event -> event.getEventId().equals(eventId));
         return specRepository.save(spectator);

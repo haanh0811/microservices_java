@@ -18,7 +18,7 @@ public class SpecController {
 
     @GetMapping("/all")
     public List<Spec> getAllSpecs(){
-        return specService.getAllSpects();
+        return specService.getAllSpecs();
     }
     @GetMapping("/{id}")
     public Spec getSpecById(@PathVariable String id) {
@@ -26,33 +26,28 @@ public class SpecController {
     }
 
     @PostMapping("/add")
-    public Spec addSpectator(@RequestBody Spec spectator) {
-        return specService.addSpectator(spectator);
+    public Spec addSpec(@RequestBody Spec spectator) {
+        return specService.addSpec(spectator);
     }
 
     @PutMapping("/update/{id}")
-    public Spec updateSpectator(@PathVariable String id, @RequestBody Spec updatedSpectator) {
-        return specService.updateSpectator(id, updatedSpectator);
+    public Spec updateSpec(@PathVariable String id, @RequestBody Spec updatedSpectator) {
+        return specService.updateSpec(id, updatedSpectator);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteSpectator(@PathVariable String id) {
-        specService.deleteSpectator(id);
+    public void deleteSpec(@PathVariable String id) {
+        specService.deleteSpec(id);
     }
 
     @PostMapping("/{spectatorId}/events/add")
-    public Spec addEventToSpectator(@PathVariable String spectatorId, @RequestBody CalendrierSpec event) {
-        return specService.addEventToSpectator(spectatorId, event);
-    }
-
-    @PutMapping("/{spectatorId}/events/update/{eventId}")
-    public Spec updateEventInSpectator(@PathVariable String spectatorId, @PathVariable String eventId, @RequestBody CalendrierSpec updatedEvent) {
-        return specService.updateEventInSpectator(spectatorId, eventId, updatedEvent);
+    public Spec addEventToSpec(@PathVariable String spectatorId, @RequestBody CalendrierSpec event) {
+        return specService.addEventToSpec(spectatorId, event);
     }
 
     @DeleteMapping("/{spectatorId}/events/delete/{eventId}")
-    public Spec deleteEventFromSpectator(@PathVariable String spectatorId, @PathVariable String eventId) {
-        return specService.deleteEventFromSpectator(spectatorId, eventId);
+    public Spec deleteEventFromSpec(@PathVariable String spectatorId, @PathVariable String eventId) {
+        return specService.deleteEventFromSpec(spectatorId, eventId);
     }
 }
 
