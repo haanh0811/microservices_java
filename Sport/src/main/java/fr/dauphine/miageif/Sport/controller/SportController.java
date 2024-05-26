@@ -41,6 +41,11 @@ public class SportController {
         return sportService.updateId(oldId, newId);
     }
 
+    @PutMapping("/updateName/{id}")
+    public Sport updateName(@PathVariable String id, @RequestBody String newName) {
+        return sportService.updateName(id, newName);
+    }
+
     @DeleteMapping("/delete/{id}")
     public void deleteSport(@PathVariable String id) {
         sportService.deleteSport(id);
