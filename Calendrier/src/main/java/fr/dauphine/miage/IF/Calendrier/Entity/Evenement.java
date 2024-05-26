@@ -36,7 +36,7 @@ public class Evenement {
     @JsonProperty("heure")
     @Column(name="heure")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    private LocalTime time;
+    private LocalTime heure;
 
     public void setId(int id) {
         this.id = id;
@@ -68,5 +68,13 @@ public class Evenement {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public LocalTime getHeure() {
+        return heure;
+    }
+
+    public void setHeure(LocalTime heure) {
+        this.heure = heure;
     }
 }

@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface EvenementRepository extends JpaRepository<Evenement, Long> {
     List<Evenement> findAll();
+
     Optional<Evenement> findById(int id);
 
     List<Evenement> findBySport(String name);
@@ -18,4 +19,8 @@ public interface EvenementRepository extends JpaRepository<Evenement, Long> {
     List<Evenement> findBySite(String name);
 
     List<Evenement> findByDate(LocalDate jour);
+
+    List<Evenement> findByDateBetween(LocalDate dateDebut, LocalDate dateFin);
+
+    void deleteById(int id);
 }

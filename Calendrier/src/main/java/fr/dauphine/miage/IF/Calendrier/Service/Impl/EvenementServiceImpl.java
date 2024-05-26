@@ -5,15 +5,12 @@ import fr.dauphine.miage.IF.Calendrier.Model.SiteModel;
 import fr.dauphine.miage.IF.Calendrier.Model.SportModel;
 import fr.dauphine.miage.IF.Calendrier.Repository.EvenementRepository;
 import fr.dauphine.miage.IF.Calendrier.Service.EvenementService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,32 +25,7 @@ public class EvenementServiceImpl implements EvenementService {
 
     @Override
     public Evenement createEvenement(Evenement e) {
-        String url1 = "http://localhost:8000/site/" + e.getSite();
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<SiteModel> response = restTemplate.getForEntity(url1, SiteModel.class);
-
-        if (!response.getStatusCode().isError()){
-            if (response.getBody() == null){
-                System.out.println(url1);
-                throw new IllegalArgumentException("this site doesn't exist");
-            }
-        }
-        else{
-            System.out.println("Connexion impossible à" + url1);
-        }
-
-        String url2 = "http://localhost:8080/api/sports/" + e.getSport();
-        ResponseEntity<SportModel> response2 = restTemplate.getForEntity(url2, SportModel.class);
-
-        if (!response2.getStatusCode().isError()){
-            if (response2.getBody() == null){
-                throw new IllegalArgumentException("this sport doesn't exist");
-            }
-        }
-        else{
-            System.out.println("Connexion impossible à" + url1);
-        }
-
+        checkSiteAndSportExistence(e);
         repository.save(e);
         return e;
     }
@@ -80,4 +52,58 @@ public class EvenementServiceImpl implements EvenementService {
         return repository.findByDate(jourJ);
     }
 
+    @Override
+    public List<Evenement> getByDate(LocalDate dateDebut, LocalDate dateFin) {
+        return repository.findByDateBetween(dateDebut, dateFin);
+    }
+
+    @Override
+    public Evenement save(Evenement oldEvenement, Evenement newEvenement) {
+        oldEvenement.setDate(newEvenement.getDate());
+        oldEvenement.setSite(newEvenement.getSite());
+        oldEvenement.setSport(newEvenement.getSport());
+        oldEvenement.setHeure(newEvenement.getHeure());
+        checkSiteAndSportExistence(newEvenement);
+        repository.save(oldEvenement);
+        return oldEvenement;
+    }
+
+    @Override
+    public List<Evenement> getAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void delete(int id) {
+        repository.deleteById(id);
+    }
+
+    private static void checkSiteAndSportExistence(Evenement e) {
+        String url1 = "http://localhost:8000/site/" + e.getSite();
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<SiteModel> response = restTemplate.getForEntity(url1, SiteModel.class);
+
+        if (!response.getStatusCode().isError()){
+            if (response.getBody() == null){
+                System.out.println(url1);
+                throw new IllegalArgumentException("this site doesn't exist");
+            }
+        }
+        else{
+            System.out.println("Connexion impossible à" + url1);
+        }
+
+        String url2 = "http://localhost:8080/api/sports/" + e.getSport();
+        ResponseEntity<SportModel> response2 = restTemplate.getForEntity(url2, SportModel.class);
+
+        if (!response2.getStatusCode().isError()){
+            if (response2.getBody() == null){
+                throw new IllegalArgumentException("this sport doesn't exist");
+            }
+        }
+        else{
+            System.out.println("Connexion impossible à" + url1);
+        }
+    }
 }
