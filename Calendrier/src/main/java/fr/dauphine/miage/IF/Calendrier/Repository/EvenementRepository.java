@@ -7,12 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface EvenementRepository extends JpaRepository<Evenement, Long> {
     List<Evenement> findAll();
 
-    Optional<Evenement> findById(int id);
+    Optional<Evenement> findById(UUID id);
 
     List<Evenement> findBySport(String name);
 
@@ -22,5 +23,5 @@ public interface EvenementRepository extends JpaRepository<Evenement, Long> {
 
     List<Evenement> findByDateBetween(LocalDate dateDebut, LocalDate dateFin);
 
-    void deleteById(int id);
+    void deleteById(UUID id);
 }

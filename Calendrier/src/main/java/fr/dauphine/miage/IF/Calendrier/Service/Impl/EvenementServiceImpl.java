@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EvenementServiceImpl implements EvenementService {
@@ -26,12 +27,13 @@ public class EvenementServiceImpl implements EvenementService {
     @Override
     public Evenement createEvenement(Evenement e) {
         checkSiteAndSportExistence(e);
+        e.setId(UUID.randomUUID());
         repository.save(e);
         return e;
     }
 
     @Override
-    public Evenement getById(int id) {
+    public Evenement getById(UUID id) {
         Optional<Evenement> optionalEvenement = repository.findById(id);
         return optionalEvenement.orElse(null);
     }
@@ -75,8 +77,20 @@ public class EvenementServiceImpl implements EvenementService {
 
     @Override
     @Transactional
-    public void delete(int id) {
+    public void delete(UUID id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public void updateSportName(Evenement evenement, String newSport) {
+        evenement.setSport(newSport);
+        repository.save(evenement);
+    }
+
+    @Override
+    public void updateSiteName(Evenement evenement, String newSite) {
+        evenement.setSite(newSite);
+        repository.save(evenement);
     }
 
     private static void checkSiteAndSportExistence(Evenement e) {

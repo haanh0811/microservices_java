@@ -4,12 +4,13 @@ import fr.dauphine.miage.IF.Calendrier.Entity.Evenement;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 
 public interface EvenementService {
     Evenement createEvenement(Evenement e);
 
-    Evenement getById(int id);
+    Evenement getById(UUID id);
 
     List<Evenement> getBySport(String name);
 
@@ -23,5 +24,9 @@ public interface EvenementService {
 
     List<Evenement> getAll();
 
-    void delete(int id);
+    void delete(UUID id);
+
+    void updateSportName(Evenement evenement, String newSport);
+
+    void updateSiteName(Evenement evenement, String newSite);
 }

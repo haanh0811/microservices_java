@@ -2,23 +2,21 @@ package fr.dauphine.miage.IF.Calendrier.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 
 @Entity
 public class Evenement {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
     @Column(name="id")
-    private int id;
+    private UUID id;
 
     @JsonProperty("site")
     @Column(name="site")
@@ -38,11 +36,11 @@ public class Evenement {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime heure;
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -76,5 +74,10 @@ public class Evenement {
 
     public void setHeure(LocalTime heure) {
         this.heure = heure;
+    }
+
+    @Override
+    public String toString(){
+        return "Sport:" + sport +" - site:" + site + " - date:" + date + " - heure:" + heure;
     }
 }
