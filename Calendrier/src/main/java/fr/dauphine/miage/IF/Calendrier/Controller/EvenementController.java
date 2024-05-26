@@ -1,6 +1,5 @@
 package fr.dauphine.miage.IF.Calendrier.Controller;
 
-import fr.dauphine.miage.IF.Calendrier.CalendrierApplication;
 import fr.dauphine.miage.IF.Calendrier.Entity.Evenement;
 import fr.dauphine.miage.IF.Calendrier.Service.EvenementService;
 import org.slf4j.Logger;
@@ -151,7 +150,7 @@ public class EvenementController {
             service.updateSportName(evenement, newName);
             logger.info("event {} updated: {}",evenement.getId(), evenement);
         }
-        return ok(null);
+        return ok(l);
     }
 
     @PutMapping("/site/{oldName}/{newName}")
@@ -166,7 +165,7 @@ public class EvenementController {
             service.updateSiteName(evenement, newName);
             logger.info("event {} updated: {}",evenement.getId(), evenement);
         }
-        return ok(null);
+        return ok(l);
     }
 
     @DeleteMapping("/{id}")
@@ -176,7 +175,7 @@ public class EvenementController {
             return status(HttpStatus.NOT_FOUND).body("Pas d'évenement trouvé avec l'id "+ id);
         }
         service.delete(id);
-        return ok(null);
+        return ok(e);
     }
 
     @DeleteMapping("/sport/{name}")
@@ -188,7 +187,7 @@ public class EvenementController {
         for (Evenement evenement: l){
             service.delete(evenement.getId());
         }
-        return ok(null);
+        return ok(l);
     }
 
     @DeleteMapping("/site/{name}")
@@ -200,7 +199,7 @@ public class EvenementController {
         for (Evenement evenement: l){
             service.delete(evenement.getId());
         }
-        return ok(null);
+        return ok(l);
     }
 
 }

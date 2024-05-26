@@ -5,10 +5,8 @@ import fr.dauphine.miageif.Site.Entity.Ville;
 import fr.dauphine.miageif.Site.Repository.SiteRepository;
 import fr.dauphine.miageif.Site.Repository.VilleRepository;
 import fr.dauphine.miageif.Site.Service.SiteService;
-import fr.dauphine.miageif.Site.SiteServiceController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -127,6 +125,5 @@ public class SiteServiceImpl implements SiteService {
         }catch(Exception ex){
             logger.warn("Connection impossible with {}", url);
         }
-
     }
 }
