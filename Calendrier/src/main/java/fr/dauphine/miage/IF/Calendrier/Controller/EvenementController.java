@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -117,6 +118,29 @@ public class EvenementController {
         }
         logger.info("Found {} events betwenn {} and {}",l.size(), dateDebut, dateFin);
         return ok(l);
+    }
+
+    @GetMapping("/date/sport/{sport}/site/{site}/date/{annee}-{jour}-{mois}/heure/{heure}:{minute}")
+    public ResponseEntity<?> getEvenementFromDetails(@PathVariable String sport, @PathVariable String site, @PathVariable int annee, @PathVariable int mois, @PathVariable int jour, @PathVariable int heure, @PathVariable int minute) {
+        logger.info("Received request to get event with sport {} - site {} on {}/{}/{} {}:{}", sport, site, annee, mois, jour, heure, minute);
+
+        LocalDate jourDate;
+        LocalTime heureDate;
+        try {
+            jourDate = LocalDate.of(annee, mois, jour);
+            heureDate = LocalTime.of(heure, minute);
+        } catch (Exception ex) {
+            logger.info("Date and Hour convesion failed {}", ex.getMessage());
+            return status(HttpStatus.BAD_REQUEST).body("Les dates et l'heure doivent corresponde à des valeurs possibles");
+        }
+
+        Evenement e = service.getBySiteAndSportAndDateAndHeure(site, sport, jourDate, heureDate);
+        if (e == null) {
+            logger.info("No event found for {} - {} - {} - {}", site, sport, jourDate, heureDate);
+            return status(HttpStatus.NOT_FOUND).body("Pas d'évenement trouvé");
+        }
+        logger.info("Event found {}", e.toString());
+        return ok(e);
     }
 
     @PutMapping("/{id}")

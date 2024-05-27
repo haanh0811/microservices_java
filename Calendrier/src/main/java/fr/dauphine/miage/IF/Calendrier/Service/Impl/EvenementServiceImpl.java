@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,6 +47,11 @@ public class EvenementServiceImpl implements EvenementService {
     @Override
     public List<Evenement> getBySite(String name) {
         return repository.findBySite(name);
+    }
+
+    @Override
+    public Evenement getBySiteAndSportAndDateAndHeure(String site, String sport, LocalDate date, LocalTime heure) {
+        return repository.getBySiteAndSportAndDateAndHeure(site, sport, date, heure);
     }
 
     @Override
