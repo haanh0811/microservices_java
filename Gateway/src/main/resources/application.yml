@@ -1,0 +1,27 @@
+server:
+  port: 5212
+  servlet:
+    context-path: /
+
+spring:
+  main:
+    web-application-type: reactive
+
+
+  cloud:
+    gateway:
+      routes:
+        - id: calendrier-service
+          uri: http://localhost:5154
+          predicates:
+            - Path=/api/calendrier/**
+          filters:
+            - RewritePath=/api/calendrier/(?<segment>.*), /${segment}
+        - id: site-service
+          uri: http://localhost:5153
+          predicates:
+            - Path=/api/sites/**
+          filters:
+            - RewritePath=/api/sites/(?<segment>.*), /${segment}
+    discovery:
+      enabled: true
