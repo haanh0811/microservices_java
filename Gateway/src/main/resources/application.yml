@@ -25,3 +25,27 @@ spring:
             - RewritePath=/api/sites/(?<segment>.*), /${segment}
     discovery:
       enabled: true
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    groups:
+      enabled: true
+    enabled: true
+  group-configs:
+    - group: calendrier-service
+      paths-to-match:
+        - /api/calendrier/**
+      display-name: Calendrier
+    - group: site-service
+      paths-to-match:
+        - /api/sites/**
+      display-name: Sites
+  swagger-ui:
+    config-url: /v3/api-docs/swagger-config
+    url: /v3/api-docs
+    urls:
+      - url: http://localhost:5212/api/sites/v3/api-docs
+        name: Site
+      - url: http://localhost:5212/api/calendrier/v3/api-docs
+        name: Calendrier
