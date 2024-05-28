@@ -114,7 +114,7 @@ public class EvenementServiceImpl implements EvenementService {
             System.out.println("Connexion impossible à" + url1);
         }
 
-        String url2 = "http://localhost:8080/api/sports/" + e.getSport();
+        String url2 = "http://localhost:5155/api/sports/" + e.getSport();
         ResponseEntity<SportModel> response2 = restTemplate.getForEntity(url2, SportModel.class);
 
         if (!response2.getStatusCode().isError()){

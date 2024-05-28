@@ -23,6 +23,18 @@ spring:
             - Path=/api/sites/**
           filters:
             - RewritePath=/api/sites/(?<segment>.*), /${segment}
+        - id: sport-service
+          uri: http://localhost:5155
+          predicates:
+            - Path=/api/sports/**
+          filters:
+            - RewritePath=/api/sports/(?<segment>.*), /${segment}
+        - id: spectateur-service
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/spectateur/**
+          filters:
+            - RewritePath=/api/spectateur/(?<segment>.*), /${segment}
     discovery:
       enabled: true
 
@@ -41,11 +53,23 @@ springdoc:
       paths-to-match:
         - /api/sites/**
       display-name: Sites
+    - group: sport-service
+      paths-to-match:
+        - /api/sports/**
+      display-name: Sports
+    - group: spectateur-service
+      paths-to-match:
+        - /api/spectateur/**
+      display-name: Spectateur
   swagger-ui:
     config-url: /v3/api-docs/swagger-config
     url: /v3/api-docs
     urls:
       - url: http://localhost:5212/api/sites/v3/api-docs
         name: Site
+      - url: http://localhost:5212/api/sports/v3/api-docs
+        name: Sport
       - url: http://localhost:5212/api/calendrier/v3/api-docs
         name: Calendrier
+      - url: http://localhost:5212/api/spectateur/v3/api-docs
+        name: Spectateur
