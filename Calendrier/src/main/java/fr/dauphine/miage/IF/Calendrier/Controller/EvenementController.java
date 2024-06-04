@@ -1,15 +1,19 @@
 package fr.dauphine.miage.IF.Calendrier.Controller;
 
 import fr.dauphine.miage.IF.Calendrier.Entity.Evenement;
+import fr.dauphine.miage.IF.Calendrier.Model.SiteModel;
+import fr.dauphine.miage.IF.Calendrier.Model.SportModel;
 import fr.dauphine.miage.IF.Calendrier.Service.EvenementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -224,6 +228,157 @@ public class EvenementController {
             service.delete(evenement.getId());
         }
         return ok(l);
+    }
+
+
+    @GetMapping("/sport/site/{site}")
+    public ResponseEntity<?> getSportFromSite(@PathVariable String site) {
+        logger.info("Received request to get sport in site {}", site);
+        List<Evenement> listEvent = service.getBySite(site);
+
+        if (listEvent == null) {
+            logger.info("No event found in {}", site);
+            return status(HttpStatus.NOT_FOUND).body("Pas d'évenement trouvé");
+        }
+
+        List<SportModel> listSport = new ArrayList<>();
+        List<String> listStringSport = new ArrayList<>();
+        for (Evenement e : listEvent){
+            if (!listStringSport.contains(e.getSport()))
+                listStringSport.add(e.getSport());
+        }
+        for (String s : listStringSport){
+            String url = "http://localhost:5155/api/sports/" + s;
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<SportModel> response = restTemplate.getForEntity(url, SportModel.class);
+
+            if (!response.getStatusCode().isError()){
+                if (response.getBody() == null){
+                    System.out.println(url);
+                    throw new IllegalArgumentException("this site doesn't exist");
+                }
+            }
+            else{
+                System.out.println("Connexion impossible à" + url);
+                status(HttpStatus.FAILED_DEPENDENCY).body("Connexion impossible à" + url);
+            }
+            listSport.add(response.getBody());
+        }
+        return ok(listSport);
+    }
+
+    @GetMapping("/sport/date/{annee}-{jour}-{mois}")
+    public ResponseEntity<?> getSportFromDate(@PathVariable int annee, @PathVariable int mois, @PathVariable int jour) {
+        logger.info("Received request to get sport at date {}-{}-{}", annee,jour, mois);
+
+        LocalDate jourDate;
+        try {
+            jourDate = LocalDate.of(annee, mois, jour);
+        } catch (Exception ex) {
+            logger.info("Date convesion failed {}", ex.getMessage());
+            return status(HttpStatus.BAD_REQUEST).body("Date conversion failed");
+        }
+        List<Evenement> listEvent = service.getByDate(annee,mois,jour);
+        if (listEvent == null) {
+            logger.info("No event at date {}-{}-{}", annee,jour, mois);
+            return status(HttpStatus.NOT_FOUND).body("Pas d'évenement trouvé à cette date");
+        }
+
+        List<SportModel> listSport = new ArrayList<>();
+        List<String> listStringSport = new ArrayList<>();
+        for (Evenement e : listEvent){
+            if (!listStringSport.contains(e.getSport()))
+                listStringSport.add(e.getSport());
+        }
+        for (String s : listStringSport){
+            String url = "http://localhost:5155/api/sports/" + s;
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<SportModel> response = restTemplate.getForEntity(url, SportModel.class);
+
+            if (!response.getStatusCode().isError()){
+                if (response.getBody() == null){
+                    System.out.println(url);
+                    throw new IllegalArgumentException("this site doesn't exist");
+                }
+            }
+            else{
+                System.out.println("Connexion impossible à" + url);
+                status(HttpStatus.FAILED_DEPENDENCY).body("Connexion impossible à" + url);
+            }
+            listSport.add(response.getBody());
+        }
+        return ok(listSport);
+    }
+
+    @GetMapping("/site/sport/{sport}")
+    public ResponseEntity<?> getSiteFromSport(@PathVariable String sport) {
+        logger.info("Received request to get site hosting sport {}", sport);
+        List<Evenement> listEvent = service.getBySport(sport);
+
+        if (listEvent == null) {
+            logger.info("No event found  {}", sport);
+            return status(HttpStatus.NOT_FOUND).body("Pas d'évenement trouvé");
+        }
+
+        List<SiteModel> listSites = new ArrayList<>();
+        List<String> listStringSite = new ArrayList<>();
+        for (Evenement e : listEvent){
+            if (!listStringSite.contains(e.getSite()))
+                listStringSite.add(e.getSite());
+        }
+        for (String s : listStringSite){
+            String url = "http://localhost:5153/site/" + s;
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<SiteModel> response = restTemplate.getForEntity(url, SiteModel.class);
+
+            if (!response.getStatusCode().isError()){
+                if (response.getBody() == null){
+                    System.out.println(url);
+                    throw new IllegalArgumentException("this site doesn't exist");
+                }
+            }
+            else{
+                System.out.println("Connexion impossible à" + url);
+                status(HttpStatus.FAILED_DEPENDENCY).body("Connexion impossible à" + url);
+            }
+            listSites.add(response.getBody());
+        }
+        return ok(listSites);
+    }
+
+    @GetMapping("/site/date/{annee}-{jour}-{mois}")
+    public ResponseEntity<?> getSiteFromDate(@PathVariable int annee, @PathVariable int mois, @PathVariable int jour) {
+        logger.info("Received request to get event with sport at date {}-{}-{}", annee,jour, mois);
+        List<Evenement> listEvent = service.getByDate(annee,mois,jour);
+        if (listEvent == null) {
+            logger.info("No event at date {}-{}-{}", annee,jour, mois);
+            return status(HttpStatus.NOT_FOUND).body("Pas d'évenement trouvé à cette date");
+        }
+
+        List<SiteModel> listSites = new ArrayList<>();
+        List<String> listStringSite = new ArrayList<>();
+        for (Evenement e : listEvent){
+            if (!listStringSite.contains(e.getSite()))
+                listStringSite.add(e.getSite());
+        }
+        for (String s : listStringSite){
+            String url = "http://localhost:5153/site/" + s;
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<SiteModel> response = restTemplate.getForEntity(url, SiteModel.class);
+
+            if (!response.getStatusCode().isError()){
+                if (response.getBody() == null){
+                    System.out.println(url);
+                    throw new IllegalArgumentException("this site doesn't exist");
+                }
+            }
+            else{
+                System.out.println("Connexion impossible à" + url);
+                status(HttpStatus.FAILED_DEPENDENCY).body("Connexion impossible à" + url);
+            }
+            listSites.add(response.getBody());
+        }
+        return ok(listSites);
     }
 
 }
