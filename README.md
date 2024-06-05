@@ -15,6 +15,21 @@ Service Site : http://localhost:5153/swagger-ui/index.html
 \
 Un swagger illustrant tous les endpoints est disponible à l'adresse http://localhost:5212/webjars/swagger-ui/4.15.5/index.html. Cependant, il n'est pas possible de lancer les requêtes via cette URL.
 
+## Appel REST via la gateway
+Les appels à la gateway ne peuvent se faire que depuis Postman. Les requêtes depuis les swaggers seront exécuté mais le résultat ne sera pas affiché.
+\
+Les URL des différents services sont les suivantes:
+\
+Service Site : http://localhost:5212/api/sites/...
+\
+Service Sport : http://localhost:5212/api/sports/...
+\
+Service Calendrier : http://localhost:5212/api/calendrier/...
+\
+Service Calendrier Spectateur : http://localhost:5212/api/spectateur/...
+\
+Ces URL sont à compléter avec le mapping précisé dans le Controller.
+\
 
 ## Connexion à la base de données Neo4j :
 url : https://workspace-preview.neo4j.io/connection/connect
