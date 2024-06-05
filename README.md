@@ -27,4 +27,12 @@ Password : vuPOlsR9s9Vofen_GpzkQVejGBrVe9IWnYiXcAI3AZU
 \
 En cas d'erreur lors du lancement du service Site, cliquer sur Instance01 / neo4j et redémarrer la base.
 
+## Connexion à la base de données MongoDB Atlas :
 
+url : https://cloud.mongodb.com/v2/665084ddad061e534ca4a7cf#/metrics/replicaSet/6650854e7a3fdf4a5026170c/explorer/Olympic24/Sport2/find
+\
+Database : Olympic24
+\
+Collections :  
+- Sport2 : pour le microservice Sport
+- spectateurs : pour le microservice Calendrier Spectateur
