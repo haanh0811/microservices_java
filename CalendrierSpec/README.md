@@ -1,4 +1,5 @@
 * CLI pour déployer :
+\
 sudo service docker start
 \
 minikube start --driver=docker
