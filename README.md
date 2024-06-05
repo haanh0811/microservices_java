@@ -31,6 +31,10 @@ En cas d'erreur lors du lancement du service Site, cliquer sur Instance01 / neo4
 
 url :https://cloud.mongodb.com/v2/665084ddad061e534ca4a7cf#/metrics/replicaSet/6650854e7a3fdf4a5026170c/explorer/Olympic24/Sport2/find
 \
+Connection :
+- identifiant : hatrn.re@gmail.com
+- mdp : MongoJava24
+\
 Cluster0
 \
 Database : Olympic24
