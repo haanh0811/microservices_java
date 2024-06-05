@@ -17,28 +17,25 @@ Un swagger illustrant tous les endpoints est disponible à l'adresse http://loca
 
 
 ## Connexion à la base de données Neo4j :
-* url : https://workspace-preview.neo4j.io/connection/connect
+url : https://workspace-preview.neo4j.io/connection/connect
 \
-* Protocol: neo4j+s://
+Protocol: neo4j+s://
 \
-* Connection Url : bbcbf8ad.databases.neo4j.io:7687
+Connection Url : bbcbf8ad.databases.neo4j.io:7687
 \
-* Password : vuPOlsR9s9Vofen_GpzkQVejGBrVe9IWnYiXcAI3AZU
+Password : vuPOlsR9s9Vofen_GpzkQVejGBrVe9IWnYiXcAI3AZU
 \
 En cas d'erreur lors du lancement du service Site, cliquer sur Instance01 / neo4j et redémarrer la base.
 
 ## Connexion à la base de données MongoDB Atlas :
-
-* url : https://cloud.mongodb.com/v2/665084ddad061e534ca4a7cf#/metrics/replicaSet/6650854e7a3fdf4a5026170c/explorer/Olympic24
+url : https://cloud.mongodb.com/v2/665084ddad061e534ca4a7cf#/metrics/replicaSet/6650854e7a3fdf4a5026170c/explorer/Olympic24
 \
-* Connection :
+Connection :
 - identifiant : hatrn.re@gmail.com
 - mdp : MongoJava24
 \
-* Cluster0
+Database : Olympic24
 \
-* Database : Olympic24
-\
-* Collections :  
+Collections :  
 - Sport2 : pour le microservice Sport
 - spectateurs : pour le microservice Calendrier Spectateur
